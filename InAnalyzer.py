@@ -34,7 +34,7 @@ class InAnalyzer(Analyzer):
                 elif time.time() > timeout:
                     break
 
-            print('Analysis done')
+            print('Buy analysis done')
             self.set_busy(False)
 
     def send_buy_request(self, trader, market, price_tweet, time_tweet):

@@ -19,16 +19,18 @@ class Listener(StreamListener):
         id = str(status.author.id)
         if id in self.followed_users.keys():
             market = 'BTC-{MARKET}'.format(MARKET=self.followed_users[id])
-            self.update_filter(6)  # update the filter if timeout ended
+            self.update_filter(5)  # update the filter if timeout ended
             if id not in self.filtered_users.keys():
                 tweet = '::'.join([str(status.created_at), status.author.screen_name, status.text]) + '\n'
                 with open('twitter_doc/tweet.txt', 'a') as db:
                     db.write('new tweet :' + market + ', created_at :' + str(status.created_at) + '\n')
+                print('\n')
                 print(tweet)
-                print(market + '\n')
+                print(market)
                 self.notify_tweet(self.trader, market)
                 self.filter(id, time.time()) # avoid to receive tweet from that id during 6 hours
             else:
+                print('\n')
                 print('The market {} already tweeted'.format(self.followed_users[id]))
 
     def on_error(self, status_code):
@@ -36,9 +38,9 @@ class Listener(StreamListener):
             print('Error while parsing twitter')
 
     def update_filter(self, timeout):
-        for id in self.filtered_users:
-            if time.time() > self.filtered_users[id] + timeout * 3600:
-                del self.filtered_users[id]
+        for id in list(self.filtered_users.keys()):
+            if time.time() > self.filtered_users[id] + timeout * 60:
+                self.filtered_users.pop(id,None)
 
     def filter(self, id, time_in):
         self.filtered_users[id] = time_in

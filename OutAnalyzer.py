@@ -59,7 +59,7 @@ class OutAnalyzer(Analyzer):
                     self.send_sell_request(self.trader, market)
                     break
 
-        print('Analysis done')
+        print('Sell analysis done')
         self.set_busy(False)
 
     def send_sell_request(self, trader, market):

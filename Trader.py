@@ -5,6 +5,7 @@ from slackclient import SlackClient
 from datetime import datetime
 import threading
 import csv
+import copy
 
 BET = 1.0 
 
@@ -37,24 +38,46 @@ class Trader(Bittrex):
     @threaded
     def on_tweet(self, market):
         if len(self.in_analyzers) > 0:
+            analyzer_found = False
             for analyzer in self.in_analyzers:
                 if analyzer.accept_analysis(market, None, None):
+                    analyzer_found = True
                     analyzer.apply_algorithm(market)
                     break
-                else:
-                    print ('Not enough In-analyzers')
+
+            if analyzer_found == False:
+                print ('Not enough In-analyzers')
+                print('Number of In-analyzers:', len(self.in_analyzers))
+                if len(self.in_analyzers) < 5:
+                    new_analyzer = copy.copy(self.in_analyzers[0])
+                    self.in_analyzers.append(new_analyzer)
+                    print('New In-analyzer added!')
+                    new_analyzer.set_busy(False)
+                    new_analyzer.accept_analysis(market, None, None)
+                    new_analyzer.apply_algorithm(market)
         else:
             print ('No In-analyzer instantiated')
 
     @threaded
     def on_buy(self, market, price_tweet, price_buy):
         if len(self.out_analyzers) > 0:
+            analyzer_found = False
             for analyzer in self.out_analyzers:
                 if analyzer.accept_analysis(market, price_tweet, price_buy):
+                    analyzer_found = True
                     analyzer.apply_algorithm(market)
                     break
-                else:
-                    print ('Not enough Out-analyzers')
+
+            if analyzer_found == False:
+                print ('Not enough Out-analyzers')
+                print('Number of Out-analyzers:', len(self.out_analyzers))
+                if len(self.out_analyzers) < 5:
+                    new_analyzer = copy.copy(self.out_analyzers[0])
+                    self.out_analyzers.append(new_analyzer)
+                    print('New Out-analyzer added!')
+                    new_analyzer.set_busy(False)
+                    new_analyzer.accept_analysis(market, price_tweet, price_buy)
+                    new_analyzer.apply_algorithm(market)
         else:
             print ('No Out-analyzer instantiated')
 
@@ -163,7 +186,7 @@ class Trader(Bittrex):
     def add_balance(self, market, quantity, bet):
         self.balances[market] += quantity
         self.balances['BTC'] -= bet
-        print(self.balances)
+        print('Balances:\n' + 'BTC = ' + self.balances['BTC'] + '\n' + market + ' = ' + self.balances[market])
 
 
     def remove_balance(self, market, quantity, gain):
