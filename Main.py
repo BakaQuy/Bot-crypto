@@ -10,6 +10,7 @@ import csv
 import sys
 
 # TWITTER ACCOUNT
+
 CONSUMER_KEY = ""
 CONSUMER_SECRET = ""
 
@@ -17,14 +18,18 @@ ACCESS_TOKEN = ""
 ACCESS_TOKEN_SECRET = ""
 
 # BITTREX ACCOUNT
+
 API_KEY = ''
 API_SECRET = ''
 
 # SLACK TOKEN
+
 SLACK_TOKEN = ""
 
 # FILES
+
 FOLLOWED_USERS_FILE = 'twitter_doc/twitter_id.csv'
+
 def csv_to_dict(filename):
     with open(filename) as f:
         reader = csv.reader(f)
@@ -32,15 +37,15 @@ def csv_to_dict(filename):
     dico = {item[1]:item[2] for item in data}
     return dico
 
-# MAIN
-# params_in = [{'epoch':3, 'vol_th':50, 'rate_growth':0.02, 'vol_growth':2},
-#             {'epoch':3, 'vol_th':50, 'rate_growth':0.01, 'vol_growth':2},
-#             {'epoch':3, 'vol_th':50, 'rate_growth':0.03, 'vol_growth':2}]
 
-params_in = [{'epoch':3, 'vol_th':10, 'rate_growth':0.01, 'vol_growth':0.01}]
+# MAIN
+params_in = [{'epoch':3, 'vol_th':50, 'rate_growth':0.02, 'vol_growth':2},
+            {'epoch':3, 'vol_th':50, 'rate_growth':0.01, 'vol_growth':2},
+            {'epoch':3, 'vol_th':50, 'rate_growth':0.03, 'vol_growth':2}]
 
 params_out = [{'period_sma': 14, 'period_ema': 9, 'tick_time': 1, 'period_time':60,
             'take_profit': None, 'stop_loss': None}]
+# associer a une channel slack chaque combinaison de params_in/params_out
 
 
 if __name__ == '__main__':

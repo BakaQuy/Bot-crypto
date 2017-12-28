@@ -7,7 +7,7 @@ import threading
 import csv
 import copy
 
-BET = 1.0 
+BET = 0.05 
 
 def threaded(func):
     def run(*k, **kw):
@@ -26,7 +26,7 @@ class Trader(Bittrex):
         self.buy_trade = []
         self.sell_trade = []
         self.balances = self.get_all_balances('twitter_doc/twitter_id.csv') #creer protefeuille virtuel de tous les coins etudies
-        self.balances['BTC'] = 100.0 #creer un portefeuille virtuel de 50 BTC 
+        self.balances['BTC'] = 10.0 #creer un portefeuille virtuel de 50 BTC 
         self.slack_token = slack_token
         self.slackclient = SlackClient(self.slack_token)
         try:
@@ -94,31 +94,15 @@ class Trader(Bittrex):
     def buy(self):
         if len(self.buy_trade) > 0:
             for trade in self.buy_trade:
-                move_1 = 'Buy done on: ' + trade[0] +'\n' # trade[0] = market
-                move_2 = 'price_tweet :' + str(trade[1]) + '\n' # trade[1] = price_tweet
-                move_3 = 'time_tweet :' + str(trade[2]) + '\n'
-                move_4 = 'price_buy :' + str(self.get_ticker(trade[0])['result']['Last']) + '\n'
-                move_5 = 'time_buy : ' + str(datetime.now()) + '\n'
-
-                move = move_1 + move_2 + move_3 + move_4 + move_5
-
-                self.slackclient.api_call(
-                    "chat.postMessage",
-                    channel='#bot-python',
-                    text=move
-                )
-                print(move)
-                with open('twitter_doc/tweet.txt', 'a') as db:
-                    db.write(move)
-                self.buy_orderbook(trade[0], BET)
+                self.buy_orderbook(trade, BET)
                 self.buy_trade.remove(trade)
                 self.on_buy(trade[0], trade[1], None)
 
-    def buy_orderbook(self, market, bet_btc):
+    def buy_orderbook(self, trade, bet_btc):
         #if self.get_balance('BTC') >= bet_btc:     #vrai
         if self.balances['BTC'] >= bet_btc:         #simulation
             bet = bet_btc
-            orderbook = self.get_orderbook(market, 'sell', 50)
+            orderbook = self.get_orderbook(trade[0], 'sell', 50)
             if orderbook['success']:
                 quantity = 0
                 orders = orderbook['result']
@@ -131,25 +115,14 @@ class Trader(Bittrex):
                         quantity_left = bet/order['Rate']
                         quantity += quantity_left
                         #self.buy_limit(market, quantity, order['Rate'])
-                        print('Buy on: ' + market + '(' + str(bet_btc/quantity) + ')')
-                        self.add_balance(market[4:], quantity, bet_btc)
+                        #print('Buy on: ' + market + '(' + str(bet_btc/quantity) + ')')
+                        self.add_balance(trade[0][4:], quantity, bet_btc)
+                        self.send_buy_move_slack(trade, str(bet_btc/quantity))                       
                         break
 
     def sell(self):
         if len(self.sell_trade) > 0:
             for trade in self.sell_trade:
-                move_1 = 'Sell done on: ' + trade + '\n'
-                move_2 = 'price_sell: ' + str(self.get_ticker(trade)['result']['Last']) + '\n'
-                move_3 = 'time_sell :' + str(datetime.now()) + '\n'
-                move = move_1 + move_2 + move_3
-                self.slackclient.api_call(
-                    "chat.postMessage",
-                    channel='#bot-python',
-                    text=move
-                )
-                print(move)
-                with open('twitter_doc/tweet.txt', 'a') as db:
-                    db.write(move)
                 self.sell_orderbook(trade)
                 self.sell_trade.remove(trade)
 
@@ -171,8 +144,9 @@ class Trader(Bittrex):
                         elif (balance - order['Quantity']) <= 0:
                             #self.sell_limit(market, quantity, order['Rate'])
                             gain += balance*order['Rate']
-                            print('Sell on: ' + market + '(' + str(gain/quantity) + ')')
+                            #print('Sell on: ' + market + '(' + str(gain/quantity) + ')')
                             self.remove_balance(market[4:], quantity, gain)
+                            self.send_sell_move_slack(market[4:], str(gain/quantity))
                             break
                     break
 
@@ -186,8 +160,7 @@ class Trader(Bittrex):
     def add_balance(self, market, quantity, bet):
         self.balances[market] += quantity
         self.balances['BTC'] -= bet
-        print('Balances:\n' + 'BTC = ' + self.balances['BTC'] + '\n' + market + ' = ' + self.balances[market])
-
+        #print('Balances:\n' + 'BTC = ' + str(self.balances['BTC']) + '\n' + market + ' = ' + str(self.balances[market]))
 
     def remove_balance(self, market, quantity, gain):
         if self.balances[market] >= quantity:
@@ -197,7 +170,45 @@ class Trader(Bittrex):
         elif self.balances[market] < quantity:
              self.balances[market] = 0.0
              self.balances['BTC'] += gain
-        print(self.balances)
+        #print('Balances:\n' + 'BTC = ' + str(self.balances['BTC']) + '\n' + market + ' = ' + str(self.balances[market]))
+
+    def send_buy_move_slack(self, trade, price_buy):
+        move_1 = 'Buy done on : ' + trade[0][4:] +'\n' # trade[0] = market
+        move_2 = 'Price tweet : ' + str(trade[1]) + '\n' # trade[1] = price_tweet
+        move_3 = 'Time tweet : ' + str(trade[2]) + '\n'
+        move_4 = 'Price buy : ' + price_buy + '\n'
+        move_5 = 'Time buy : ' + str(datetime.now()) + '\n'
+        move_6 = 'BTC : ' + str(self.balances['BTC']) + '\n'
+        move_7 = trade[0][4:] + ' : ' + str(self.balances[trade[0][4:]])
+
+        move = move_1 + move_2 + move_3 + move_4 + move_5 + move_6 + move_7
+        print(move)
+
+        with open('twitter_doc/tweet.txt', 'a') as db:
+            db.write(move)
+        self.slackclient.api_call(
+            "chat.postMessage",
+            channel='#bot-python',
+            text=move
+        )
+
+    def send_sell_move_slack(self, market, price_sell):
+        move_1 = 'Sell done on : ' + market + '\n'
+        move_2 = 'Price sell : ' + price_sell + '\n'
+        move_3 = 'Time sell : ' + str(datetime.now()) + '\n'
+        move_4 = 'BTC : ' + str(self.balances['BTC']) + '\n'
+        move_5 = market + ' : ' + str(self.balances[market])
+
+        move = move_1 + move_2 + move_3 + move_4 + move_5
+        print(move)
+
+        with open('twitter_doc/tweet.txt', 'a') as db:
+            db.write(move)
+        self.slackclient.api_call(
+            "chat.postMessage",
+            channel='#bot-python',
+            text=move
+        )
 
     @threaded
     def check_order(self):

@@ -1,0 +1,62 @@
+new tweet :BTC-NEO, created_at :2017-12-28 18:36:57
+new tweet :BTC-SHIFT, created_at :2017-12-28 18:38:00
+new tweet :BTC-NEO, created_at :2017-12-28 18:39:21
+new tweet :BTC-NEO, created_at :2017-12-28 18:42:04
+new tweet :BTC-NEO, created_at :2017-12-28 18:42:41
+new tweet :BTC-NEO, created_at :2017-12-28 18:43:21
+new tweet :BTC-PINK, created_at :2017-12-28 18:44:14
+Buy done on : PINK
+Price tweet : 3.59e-06
+Time tweet : 2017-12-28 19:44:15.956219
+Price buy : 3.5923520642502973e-06
+Time buy : 2017-12-28 19:44:17.704510
+BTC : 9.95PINK : 13918.457630470222new tweet :BTC-NEO, created_at :2017-12-28 18:45:42
+Buy done on : NEO
+Price tweet : 0.00447211
+Time tweet : 2017-12-28 19:45:43.344504
+Price buy : 0.004482457406310965
+Time buy : 2017-12-28 19:45:46.354023
+BTC : 9.95NEO : 11.154595675489015new tweet :BTC-SHIFT, created_at :2017-12-28 18:46:49
+Buy done on : SHIFT
+Price tweet : 0.0004252
+Time tweet : 2017-12-28 19:47:55.067375
+Price buy : 0.0004252
+Time buy : 2017-12-28 19:47:57.253283
+BTC : 9.899999999999999SHIFT : 117.5917215428034Sell done on : SHIFT
+Price sell : 0.00041825
+Time sell : 2017-12-28 19:48:01.778278
+BTC : 9.949182737535276SHIFT : 0.0new tweet :BTC-STORJ, created_at :2017-12-28 18:48:52
+Buy done on : STORJ
+Price tweet : 9.28e-05
+Time tweet : 2017-12-28 19:48:53.349356
+Price buy : 9.338e-05
+Time buy : 2017-12-28 19:48:56.348118
+BTC : 9.95
+STORJ : 535.4465624330692new tweet :BTC-QRL, created_at :2017-12-28 18:50:41
+Buy done on : QRL
+Price tweet : 0.00014148
+Time tweet : 2017-12-28 19:50:43.330971
+Price buy : 0.00014309636418427863
+Time buy : 2017-12-28 19:50:46.187217
+BTC : 9.899999999999999
+QRL : 349.41488754815816new tweet :BTC-DGB, created_at :2017-12-28 18:52:58
+Buy done on : DGB
+Price tweet : 4.16e-06
+Time tweet : 2017-12-28 19:52:59.933913
+Price buy : 4.17e-06
+Time buy : 2017-12-28 19:53:02.796425
+BTC : 9.849999999999998
+DGB : 11990.407673860913Sell done on : QRL
+Price sell : 0.00013971326163407164
+Time sell : 2017-12-28 19:53:57.565643
+BTC : 9.898817893602853
+QRL : 0.0new tweet :BTC-NEO, created_at :2017-12-28 18:59:21
+new tweet :BTC-XRP, created_at :2017-12-28 19:03:34
+Buy done on : XRP
+Price tweet : 9.178e-05
+Time tweet : 2017-12-28 20:03:35.263809
+Price buy : 9.301e-05
+Time buy : 2017-12-28 20:04:35.104200
+BTC : 9.95
+XRP : 537.5766046661649new tweet :BTC-DGB, created_at :2017-12-28 19:04:54
+new tweet :BTC-MUE, created_at :2017-12-28 19:05:05
