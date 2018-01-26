@@ -1,27 +1,30 @@
 # -*- coding: utf-8 -*-
-
+import threading
+import csv
+import sys
 from tweepy import OAuthHandler, Stream, API
 from Trader import Trader
 from Listener import Listener
 from InAnalyzer import InAnalyzer
 from OutAnalyzer import OutAnalyzer
-import threading
-import csv
-import sys
+from configparser import ConfigParser
+
+config = ConfigParser()
+config.read("twitter_doc/config.ini")
 
 # TWITTER ACCOUNT
-CONSUMER_KEY = ""
-CONSUMER_SECRET = ""
+CONSUMER_KEY = config.get("Twitter","CONSUMER_KEY")
+CONSUMER_SECRET = config.get("Twitter","CONSUMER_SECRET")
 
-ACCESS_TOKEN = ""
-ACCESS_TOKEN_SECRET = ""
+ACCESS_TOKEN = config.get("Twitter","ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = config.get("Twitter","ACCESS_TOKEN_SECRET")
 
 # BITTREX ACCOUNT
-API_KEY = ''
-API_SECRET = ''
+API_KEY = config.get("Bittrex","API_KEY")
+API_SECRET = config.get("Bittrex","API_SECRET")
 
 # SLACK TOKEN
-SLACK_TOKEN = ""
+SLACK_TOKEN = config.get("Slack","SLACK_TOKEN")
 
 # FILES
 FOLLOWED_USERS_FILE = 'twitter_doc/twitter_id.csv'
