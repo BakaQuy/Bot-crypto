@@ -37,6 +37,8 @@ class Trader(Bittrex):
 
     @threaded
     def on_tweet(self, market):
+        print(threading.active_count())
+        print(threading.enumerate())
         if len(self.in_analyzers) > 0:
             analyzer_found = False
             for analyzer in self.in_analyzers:

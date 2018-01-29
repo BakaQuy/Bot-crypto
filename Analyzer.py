@@ -11,7 +11,6 @@ def threaded(func):
         t.start()
     return run
 
-
 class Analyzer(Bittrex):
     """Analyze the market following a specific algorithm"""
 

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from tweepy.streaming import StreamListener
-from termcolor import colored
 import time
-
+import threading
 
 class Listener(StreamListener):
     '''Bot that constantly listen to the twitter account he is linked to

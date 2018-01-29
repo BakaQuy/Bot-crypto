@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import threading
 import csv
 import sys
 from tweepy import OAuthHandler, Stream, API
