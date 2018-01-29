@@ -41,7 +41,7 @@ def csv_to_dict(filename):
 
 params_in = [{'epoch':3, 'vol_th':10, 'rate_growth':0.01, 'vol_growth':0.05}]
 
-params_out = [{'period_sma': 14, 'period_ema': 9, 'tick_time': 1, 'period_time':60,
+params_out = [{'period_sma': 14, 'period_ema': 9, 'tick_time': 5, 'period_time':60,
             'take_profit': None, 'stop_loss': None}]
 
 

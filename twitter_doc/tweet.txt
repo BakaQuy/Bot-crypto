@@ -13,3 +13,25 @@ new tweet :BTC-XEM, created_at :2018-01-26 20:00:04
 new tweet :BTC-CLOAK, created_at :2018-01-26 20:00:06
 new tweet :BTC-SNGLS, created_at :2018-01-26 20:02:30
 new tweet :BTC-SHIFT, created_at :2018-01-26 20:17:07
+new tweet :BTC-SWIFT, created_at :2018-01-29 20:55:42
+new tweet :BTC-MUE, created_at :2018-01-29 21:14:10
+new tweet :BTC-STORJ, created_at :2018-01-29 21:15:45
+new tweet :BTC-PTOY, created_at :2018-01-29 21:18:55
+new tweet :BTC-XMR, created_at :2018-01-29 21:19:12
+Buy done on : PTOY
+Price tweet : 3.35e-05
+Time tweet : 2018-01-29 22:18:55.566887
+Price buy : 3.399465089556172e-05
+Time buy : 2018-01-29 22:21:55.564321
+BTC : 9.95
+PTOY : 1470.819634348059new tweet :BTC-SWT, created_at :2018-01-29 21:24:27
+Sell done on : PTOY
+Price sell : 3.313408183884468e-05
+Time sell : 2018-01-29 22:29:04.214137
+BTC : 9.998734258134668
+PTOY : 0.0new tweet :BTC-NEO, created_at :2018-01-29 21:40:40
+new tweet :BTC-NEO, created_at :2018-01-29 21:42:41
+new tweet :BTC-NEO, created_at :2018-01-29 21:43:27
+new tweet :BTC-NEO, created_at :2018-01-29 21:44:28
+new tweet :BTC-MUE, created_at :2018-01-29 21:46:25
+new tweet :BTC-CFI, created_at :2018-01-29 21:54:49

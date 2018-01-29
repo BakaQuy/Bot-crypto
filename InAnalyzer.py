@@ -11,8 +11,8 @@ class InAnalyzer(Analyzer):
 
     def apply_algorithm(self, market):
         print('Buy analysis...')
-        market_volume = self.get_marketsummary(market)['result'][0]['BaseVolume']
-        if market_volume != None and market_volume >= self.params['vol_th']:
+        market_summary = self.get_marketsummary(market)
+        if market_summary['success'] == True and market_summary['result'][0]['BaseVolume'] >= self.params['vol_th']:
             volumes = []  # chaque element = volume des 200 dernières transactions d achats
             rates = []
             time_tweet = datetime.now()
@@ -34,7 +34,6 @@ class InAnalyzer(Analyzer):
                     time.sleep(5)
                 elif time.time() > timeout:
                     break
-
         print('Buy analysis done')
         self.set_busy(False)
 

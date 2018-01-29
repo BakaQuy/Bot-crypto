@@ -16,6 +16,8 @@ class Listener(StreamListener):
     def on_status(self, status):
         id = str(status.author.id)
         if id in self.followed_users.keys():
+            print(threading.active_count())
+            print(threading.enumerate())
             market = 'BTC-{MARKET}'.format(MARKET=self.followed_users[id])
             self.update_filter(5)  # update the filter if timeout ended
             if id not in self.filtered_users.keys():
