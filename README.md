@@ -1,2 +1,2 @@
 # Bot-crypto
-Bot Crypto
+Bot Crypto based on Twitter events.
